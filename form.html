@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+    <!-- validate.css -->
+    <link rel="stylesheet" type="text/css" href="class/jquery.validate/validate.css">
+
+    <title>jquery.validate + bootstrap4</title>
+  </head>
+  <body>
+
+    <div class="container mt-5">
+      <div class="card">
+        <div class="card-heading bg-primary text-white p-1">
+          <h3>jquery.validate + bootstrap4</h3>
+        </div>
+        <div class="card-body">
+          <form id="signupForm1" method="post" class="" action="" novalidate="novalidate">
+            
+            <div class="form-group">
+              <label   class="sr-only" for="firstname1">First name</label>
+              <input type="text" class="form-control" id="firstname1" name="firstname1" placeholder="First name">
+            </div>
+
+            <div class="form-group">
+              <label for="lastname1">Last name</label>
+              <input type="text" class="form-control" id="lastname1" name="lastname1" placeholder="Last name">
+            </div>
+
+            <div class="form-group">
+              <label for="username1">Username</label>
+              <input type="text" class="form-control" id="username1" name="username1" placeholder="Username">
+            </div>
+
+            <div class="form-group">
+              <label for="email1">Email</label>
+              <input type="text" class="form-control" id="email1" name="email1" placeholder="Email">
+            </div>
+
+            <div class="form-group">
+              <label for="password1">Password</label>
+              <input type="password" class="form-control" id="password1" name="password1" placeholder="Password">
+            </div>
+
+            <div class="form-group">
+              <label for="confirm_password1">Confirm password</label>
+              <input type="password" class="form-control" id="confirm_password1" name="confirm_password1" placeholder="Confirm password">
+              </div>
+
+            <div class="form-group">
+              <label for="agree1">policy</label>
+              <div class="checkbox">
+                <input type="checkbox" id="agree1" name="agree1" value="agree">Please agree to our policy          
+                
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>radio</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="enable" id="enable_1">
+                <label class="form-check-label mr-5" for="enable_1">啟用</label>
+
+                <input class="form-check-input" type="radio" name="enable" id="enable_0">
+                <label class="form-check-label" for="enable_0">停用</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>checkbox</label>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox1" name="checkbox[]">
+                <label class="form-check-label mr-5" for="checkbox1">
+                  Default checkbox
+                </label>
+
+                <input class="form-check-input" type="checkbox" value="" id="checkbox1-2" name="checkbox[]">
+                <label class="form-check-label" for="checkbox1-2">
+                  Default checkbox2
+                </label>
+              </div>
+            </div>
+            
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary" name="signup1" value="Sign up">Sign up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--  -->
+    <script type="text/javascript" src="class/jquery.validate/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+
+      $( document ).ready( function () {
+
+        $( "#signupForm1" ).validate( {
+          rules: {
+            firstname1: "required",
+            lastname1: "required",
+            username1: {
+              required: true,
+              minlength: 2
+            },
+            password1: {
+              required: true,
+              minlength: 5
+            },
+            confirm_password1: {
+              required: true,
+              minlength: 5,
+              equalTo: "#password1"
+            },
+            email1: {
+              required: true,
+              email: true
+            },
+            agree1: "required",
+            "checkbox[]": "required",
+            enable: "required"
+          },
+          messages: {
+            firstname1: "Please enter your firstname",
+            lastname1: "Please enter your lastname",
+            username1: {
+              required: "Please enter a username",
+              minlength: "Your username must consist of at least 2 characters"
+            },
+            password1: {
+              required: "Please provide a password",
+              minlength: "Your password must be at least 5 characters long"
+            },
+            confirm_password1: {
+              required: "Please provide a password",
+              minlength: "Your password must be at least 5 characters long",
+              equalTo: "Please enter the same password as above"
+            },
+            email1: "Please enter a valid email address",
+            agree1: "Please accept our policy",
+            "checkbox[]": "請至少選一個",
+            enable: "請至少選一個"
+          },
+          errorElement: "div",
+          errorPlacement: function ( error, element ) {
+            // Add the `help-block` class to the error element
+            //error.addClass( "help-block" );
+
+            // Add `has-feedback` class to the parent div.form-group
+            // in order to add icons to inputs
+            //element.addClass( "has-feedback" );
+
+            if ( element.prop( "type" ) === "checkbox" ||  element.prop( "type" ) === "radio") {
+              error.insertAfter( element.parent( "div" ) );
+            } else {
+              error.insertAfter( element );
+            }
+
+            // Add the span element, if doesn't exists, and apply the icon classes to it.
+            // if ( !element.next( "span" )[ 0 ] ) {
+            //   $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+            // }
+          },
+          success: function ( label, element ) {
+            // Add the span element, if doesn't exists, and apply the icon classes to it.
+            // if ( !$( element ).next( "span" )[ 0 ] ) {
+            //   $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+            // }
+          },
+          highlight: function ( element, errorClass, validClass ) {
+            //驗證失敗要做的事
+            $( element ).addClass( "has-error" ).removeClass( "has-success" );
+            //$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+          },
+          unhighlight: function ( element, errorClass, validClass ) {
+            //驗證成功要做的事
+            $( element ).addClass( "has-success" ).removeClass( "has-error" );
+            //$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+          }
+        } );
+      } );
+    </script>
+  </body>
+</html>
